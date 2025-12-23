@@ -1,0 +1,104 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '' } = Astro.props;
+import site from '../data/site';
+
+const rawBase = import.meta.env.BASE_URL || '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`; // ensure trailing slash
+
+const normalizePath = (path = '') => {
+  if (!path) return '/';
+  // strip base prefix so active state works with or without base path
+  return path.startsWith(base) ? path.slice(base.length - 1) || '/' : path;
+};
+
+const normalizedCurrent = normalizePath(currentPath);
+const navLinks = [
+  { href: `${base}`, path: '/', label: '主页' },
+  { href: `${base}projects/`, path: '/projects', label: '项目' },
+  { href: `${base}blog/`, path: '/blog', label: '博客' },
+];
+---
+
+<nav class="nav">
+  <div class="nav-container">
+    <a href={base} class="nav-logo">
+      {site.name}
+    </a>
+    <ul class="nav-links">
+      {navLinks.map((item) => (
+        <li>
+          <a href={item.href} class={normalizedCurrent === item.path ? 'active' : ''}>
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    background-color: rgba(var(--color-bg-secondary-rgb, 245, 245, 245), 0.8);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .nav {
+      background-color: rgba(var(--color-bg-secondary-rgb, 42, 42, 42), 0.8);
+    }
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .nav-logo:hover {
+    color: var(--color-accent);
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+  }
+
+  .nav-links a {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      gap: 1rem;
+    }
+  }
+</style>
+

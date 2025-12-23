@@ -1,0 +1,65 @@
+---
+import site from '../data/site';
+---
+
+<footer class="footer">
+  <div class="footer-container">
+    <p class="footer-text">
+      © {new Date().getFullYear()} {site.name}. All rights reserved.
+    </p>
+    <div class="footer-links">
+      {site.socialLinks.map((link) => (
+        <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.name}>
+          {link.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    padding: 2rem 0;
+    margin-top: 4rem;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-text {
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-links a {
+    color: var(--color-text-secondary);
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
+
