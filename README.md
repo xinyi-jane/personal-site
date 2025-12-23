@@ -1,43 +1,43 @@
-# Astro Starter Kit: Minimal
+# Personal Site (Astro)
 
-```sh
-npm create astro@latest -- --template minimal
+一个基于 Astro 的个人网站，用于展示个人信息、项目和博客。仓库已设置 `base: '/personal-site'`，适用于 GitHub Pages 子路径部署。
+
+## 项目结构
+
+```
+/public          静态资源（favicon 等）
+/src
+  /components    导航、页脚等可复用组件
+  /layouts       通用页面布局
+  /pages         页面路由：主页、项目、博客
+    /blog        博客列表占位页
+    /projects    项目列表页
+  /data          站点与项目数据（site.ts, projects.ts）
+  /styles        全局样式
+/astro.config.mjs 配置 base 与 sitemap
+/tsconfig.json    TypeScript 配置
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+主要页面：
+- `/` 主页，展示个人介绍、精选项目入口
+- `/projects/` 项目列表
+- `/blog/` 博客占位页（可后续填充）
 
-## 🚀 Project Structure
+## 开发与构建
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+npm install          # 安装依赖
+npm run dev          # 本地开发，默认 http://localhost:4321/personal-site
+npm run build        # 产出静态文件到 dist/
+npm run preview      # 预览构建结果
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 部署提示（GitHub Pages）
+- `astro.config.mjs` 中 `site` 和 `base` 已配置为 `/personal-site`，保持与仓库名一致。
+- 构建产物在 `dist/`，GitHub Pages 可直接指向该目录（Actions 或静态托管）。
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 数据与定制
+- 站点信息：`src/data/site.ts`
+- 项目数据：`src/data/projects.ts`
+- 导航 / 页脚：`src/components/Nav.astro`，`src/components/Footer.astro`
+- 全局样式：`src/styles/global.css`
